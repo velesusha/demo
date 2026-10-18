@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Пример сайта: Пример сайта для мастерской">
+<title>Пример сайта: мастерская и ремонт</title>
+<style>
+  :root {
+    --bg:#f4f8fd; --card:#ffffff; --ink:#14263d; --muted:#4d6078; --line:#d9e4f3;
+    --teal:#2a6fd0; --teal-d:#1b56a8; --mint:#dcebfd; --lav:#a8b8f0; --lav-l:#ebeffd; --gold:#f2c14e;
+    --r:22px; --shadow:0 10px 30px rgba(18,30,40,.08);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.6; padding-bottom:76px; }
+  h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; font-weight:700; line-height:1.15; }
+  a { color:inherit; }
+  :focus-visible { outline:3px solid var(--lav); outline-offset:3px; border-radius:8px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  .banner { background:#fff4cc; color:#5f4b0a; font-size:13px; text-align:center; padding:9px 14px; }
+  header { position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:Georgia,serif; font-weight:700; font-size:21px; text-decoration:none; }
+  .links { display:flex; gap:22px; font-size:15px; }
+  .links a { text-decoration:none; color:var(--muted); }
+  .links a:hover { color:var(--teal-d); }
+  @media (max-width:760px) { .links { display:none; } }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--teal); color:#fff; font-weight:700; font-size:16px; text-decoration:none; padding:14px 26px; border-radius:99px; border:0; cursor:pointer; box-shadow:0 8px 20px color-mix(in srgb, var(--teal) 30%, transparent); transition:transform .15s ease, background .15s ease; font-family:inherit; }
+  .btn:hover { background:var(--teal-d); transform:translateY(-1px); }
+  .btn.ghost { background:transparent; color:var(--ink); border:2px solid var(--line); box-shadow:none; }
+  .btn.ghost:hover { border-color:var(--teal); background:var(--mint); }
+  .btn.small { padding:10px 20px; font-size:15px; }
+  .hero { position:relative; overflow:hidden; padding:54px 0 64px; }
+  .hero::before { content:""; position:absolute; inset:-120px -160px auto auto; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, var(--lav-l), transparent 68%); z-index:-1; }
+  .hero::after { content:""; position:absolute; inset:auto auto -160px -140px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle, var(--mint), transparent 70%); z-index:-1; }
+  .hero-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center; }
+  @media (max-width:860px) { .hero-grid { grid-template-columns:1fr; } .art { order:-1; max-width:300px; margin:0 auto; } }
+  .eyebrow { display:inline-flex; gap:8px; align-items:center; background:var(--lav-l); color:var(--ink); font-weight:600; font-size:14px; padding:7px 14px; border-radius:99px; margin-bottom:18px; }
+  .hero h1 { font-size:clamp(34px,6vw,56px); letter-spacing:-.01em; margin-bottom:18px; }
+  .hero h1 em { font-style:italic; color:var(--teal-d); }
+  .hero p.lead { font-size:19px; color:var(--muted); max-width:520px; margin-bottom:28px; }
+  .cta { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px; }
+  .perks { display:grid; gap:10px; list-style:none; }
+  .perks li { display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:15px; }
+  .perks li::before { content:""; flex:0 0 20px; height:20px; margin-top:2px; border-radius:50%; background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3.2L15 6.8' fill='none' stroke='%232a6fd0' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+  .art svg { width:100%; height:auto; filter:drop-shadow(0 22px 30px color-mix(in srgb, var(--teal) 25%, transparent)); }
+  @media (prefers-reduced-motion:no-preference) {
+    .spark { animation:tw 3.2s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
+    .spark:nth-of-type(2) { animation-delay:.9s; } .spark:nth-of-type(3) { animation-delay:1.8s; }
+    @keyframes tw { 0%,100% { opacity:.35; transform:scale(.8) rotate(0); } 50% { opacity:1; transform:scale(1.1) rotate(20deg); } }
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity:1; transform:none; }
+  }
+  section { padding:34px 0; }
+  .head { text-align:center; margin-bottom:30px; }
+  .head h2 { font-size:clamp(28px,4vw,38px); margin-bottom:8px; }
+  .head p { color:var(--muted); max-width:560px; margin:0 auto; }
+  .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px; }
+  .svc { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:24px; box-shadow:var(--shadow); transition:transform .2s ease, box-shadow .2s ease; }
+  .svc:hover { transform:translateY(-4px); box-shadow:0 16px 36px rgba(18,30,40,.12); }
+  .ico { width:48px; height:48px; border-radius:14px; background:var(--mint); display:grid; place-items:center; margin-bottom:14px; }
+  .ico.l { background:var(--lav-l); } .ico svg { width:26px; height:26px; }
+  .svc h3 { font-size:20px; margin-bottom:6px; }
+  .svc p { color:var(--muted); font-size:15px; }
+  .note { color:var(--muted); font-size:13px; text-align:center; margin-top:16px; }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; counter-reset:s; }
+  .step { counter-increment:s; background:linear-gradient(160deg,var(--mint),#fff 70%); border-radius:var(--r); padding:26px 24px 24px; border:1px solid var(--line); }
+  .step::before { content:counter(s); display:grid; place-items:center; width:42px; height:42px; border-radius:50%; background:var(--teal); color:#fff; font-family:Georgia,serif; font-weight:700; font-size:20px; margin-bottom:12px; }
+  .step h3 { font-size:19px; margin-bottom:4px; }
+  .step p { color:var(--muted); font-size:15px; }
+  .booking { background:var(--card); border:1px solid var(--line); border-radius:30px; padding:34px; box-shadow:var(--shadow); display:grid; grid-template-columns:.8fr 1.2fr; gap:32px; }
+  @media (max-width:860px) { .booking { grid-template-columns:1fr; padding:22px; } }
+  .booking h2 { font-size:clamp(26px,4vw,34px); margin-bottom:10px; }
+  .booking .side p { color:var(--muted); margin-bottom:14px; }
+  .field { display:grid; gap:7px; margin-bottom:16px; }
+  label, .lab { font-weight:600; font-size:14px; }
+  input[type=text], input[type=tel], input[type=date] { font:inherit; padding:13px 14px; border-radius:14px; border:1.5px solid var(--line); background:#fff; color:var(--ink); width:100%; }
+  input:focus { outline:3px solid var(--lav); border-color:var(--lav); }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { font:inherit; font-size:14px; padding:9px 15px; border-radius:99px; border:1.5px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+  .chip[aria-pressed=true] { background:var(--teal); border-color:var(--teal); color:#fff; font-weight:600; }
+  .slots { display:grid; grid-template-columns:repeat(auto-fill,minmax(78px,1fr)); gap:8px; }
+  .slot { font:inherit; padding:10px 0; border-radius:12px; border:1.5px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+  .slot[aria-pressed=true] { background:var(--lav); border-color:var(--lav); font-weight:700; }
+  .err { color:#b3261e; font-size:13px; min-height:18px; }
+  .success { text-align:center; padding:26px 10px; }
+  .success .tick { width:66px; height:66px; border-radius:50%; background:var(--mint); display:grid; place-items:center; margin:0 auto 14px; }
+  .success h3 { font-size:24px; margin-bottom:8px; }
+  .success p { color:var(--muted); }
+  [hidden] { display:none !important; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .ph { aspect-ratio:4/3; border-radius:var(--r); display:grid; place-items:center; text-align:center; padding:18px; color:var(--teal-d); font-weight:600; background:repeating-linear-gradient(135deg,var(--mint),var(--mint) 14px,var(--bg) 14px,var(--bg) 28px); border:1px dashed var(--teal); }
+  .ph:nth-child(2) { background:repeating-linear-gradient(135deg,var(--lav-l),var(--lav-l) 14px,var(--bg) 14px,var(--bg) 28px); border-color:var(--lav); color:var(--ink); }
+  .contact { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media (max-width:760px) { .contact { grid-template-columns:1fr; } }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:26px; }
+  .box h3 { font-size:22px; margin-bottom:12px; }
+  .box dl { display:grid; gap:12px; }
+  .box dt { font-size:13px; color:var(--muted); }
+  .box dd { font-weight:600; }
+  .map { min-height:220px; border-radius:var(--r); display:grid; place-items:center; text-align:center; padding:20px; background:linear-gradient(135deg,var(--mint),var(--lav-l)); border:1px solid var(--line); color:var(--muted); }
+  footer { margin-top:30px; padding:28px 0 34px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; text-align:center; }
+  .bar { position:fixed; left:0; right:0; bottom:0; z-index:30; display:none; gap:10px; padding:10px 14px calc(10px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.96); box-shadow:0 -6px 20px rgba(18,30,40,.12); }
+  .bar .btn { flex:1; padding:13px 8px; }
+  @media (max-width:760px) { .bar { display:flex; } }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<div class="banner">Это пример сайта для сферы «мастерская и ремонт». Название, фото, услуги и цены подставим ваши.</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="На главную">
+      <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="6" width="52" height="52" rx="16" fill="#2a6fd0"/><path d="M32 16l4 11 11 4-11 4-4 11-4-11-11-4 11-4z" fill="#fff"/></svg>
+      <span>Ваша мастерская</span>
+    </a>
+    <nav class="links" aria-label="Разделы">
+      <a href="#uslugi">Услуги</a><a href="#kak">Как записаться</a><a href="#zapis">Запись</a><a href="#kontakty">Контакты</a>
+    </nav>
+    <a class="btn small" href="#kontakty">Контакты</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Пример сайта для мастерской</span>
+        <h1>Оставьте заявку на ремонт <em>онлайн</em>, не дозваниваясь</h1>
+        <p class="lead">Опишите, что нужно сделать, и выберите время: мы свяжемся и назовём срок и цену.</p>
+        <div class="cta">
+          <a class="btn" href="#zapis">Записаться онлайн</a>
+          <a class="btn ghost" href="#kontakty">Контакты</a>
+        </div>
+        <ul class="perks">
+          <li>Заявку можно оставить в любое время, не дожидаясь, пока ответят по телефону</li>
+          <li>Три шага: услуга, время, контакты</li>
+          <li>Администратор свяжется и подтвердит время</li>
+        </ul>
+      </div>
+      <div class="art" aria-hidden="true"><svg viewBox="0 0 400 400"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dcebfd"/><stop offset="1" stop-color="#ebeffd"/></linearGradient><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f1f5f7"/></linearGradient></defs><circle cx="200" cy="200" r="170" fill="url(#g1)"/><circle cx="200" cy="195" r="104" fill="none" stroke="#2a6fd0" stroke-width="34" stroke-dasharray="26 20.3"/><circle cx="200" cy="195" r="88" fill="#fff" stroke="#2a6fd0" stroke-width="8"/><circle cx="200" cy="195" r="36" fill="#dcebfd" stroke="#2a6fd0" stroke-width="8"/><polygon class="spark" points="318.0,58.0 324.0,76.0 342.0,82.0 324.0,88.0 318.0,106.0 312.0,88.0 294.0,82.0 312.0,76.0" fill="#f2c14e"/><polygon class="spark" points="80.0,135.0 83.8,146.2 95.0,150.0 83.8,153.8 80.0,165.0 76.2,153.8 65.0,150.0 76.2,146.2" fill="#a8b8f0"/><polygon class="spark" points="330.0,249.0 332.8,257.2 341.0,260.0 332.8,262.8 330.0,271.0 327.2,262.8 319.0,260.0 327.2,257.2" fill="#2a6fd0"/></svg></div>
+    </div>
+  </div>
+
+  <section id="uslugi">
+    <div class="wrap">
+      <div class="head reveal"><h2>Чем можем помочь</h2><p>Основные направления. Точный список и цены подставим ваши.</p></div>
+      <div class="services"><article class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a6fd0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg></div><h3>Диагностика</h3><p>Выясним причину поломки и назовём срок и цену.</p></article><article class="svc reveal"><div class="ico l"><svg viewBox="0 0 24 24" fill="none" stroke="#1b56a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></div><h3>Ремонт</h3><p>Ремонт техники, одежды или обуви, как у вас в работе.</p></article><article class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a6fd0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg></div><h3>Срочный ремонт</h3><p>Если нужно быстро, оставьте заявку, и мы свяжемся.</p></article><article class="svc reveal"><div class="ico l"><svg viewBox="0 0 24 24" fill="none" stroke="#1b56a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9.4l-4.2 1.8L12 16l-1.8-4.8L6 9.4l4.2-1.8z"/></svg></div><h3>Чистка и уход</h3><p>Профилактика и уход, чтобы вещь служила дольше.</p></article><article class="svc reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a6fd0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></div><h3>Приём по записи</h3><p>Выберите время и приходите без очередей.</p></article><article class="svc reveal"><div class="ico l"><svg viewBox="0 0 24 24" fill="none" stroke="#1b56a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.6-7 10-7 10z"/></svg></div><h3>Консультация</h3><p>Подскажем, стоит ли чинить и как лучше сделать.</p></article></div>
+      <p class="note">Список услуг примерный: уточним вместе с вами.</p>
+    </div>
+  </section>
+
+  <section id="kak">
+    <div class="wrap">
+      <div class="head reveal"><h2>Как записаться</h2><p>Три простых шага. Ни ожидания на линии, ни лишних вопросов.</p></div>
+      <div class="steps">
+        <div class="step reveal"><h3>Выберите услугу</h3><p>Нажмите нужное направление. Если не уверены, выберите консультацию.</p></div>
+        <div class="step reveal"><h3>Укажите день и время</h3><p>Выберите удобный день и свободное окошко.</p></div>
+        <div class="step reveal"><h3>Оставьте контакты</h3><p>Имя и телефон. Администратор свяжется и подтвердит запись.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="zapis">
+    <div class="wrap">
+      <div class="booking reveal">
+        <div class="side">
+          <h2>Запись онлайн</h2>
+          <p>Так будет выглядеть запись для ваших клиентов. Попробуйте заполнить: форма работает в демонстрационном режиме.</p>
+          <p style="font-size:13px">Заявки пока никуда не отправляются: в готовой версии они сразу приходят администратору в Telegram.</p>
+        </div>
+        <div>
+          <form id="f" novalidate>
+            <div class="field"><span class="lab" id="l1">Что вам нужно</span>
+              <div class="chips" role="group" aria-labelledby="l1" id="svc"><button type="button" class="chip" aria-pressed="false">Диагностика</button><button type="button" class="chip" aria-pressed="false">Ремонт</button><button type="button" class="chip" aria-pressed="false">Срочный ремонт</button><button type="button" class="chip" aria-pressed="false">Консультация</button><button type="button" class="chip" aria-pressed="false">Другое</button></div>
+            </div>
+            <div class="field"><label for="d">Дата</label><input id="d" type="date"></div>
+            <div class="field"><span class="lab" id="l2">Время</span>
+              <div class="slots" role="group" aria-labelledby="l2" id="slots"></div>
+            </div>
+            <div class="field"><label for="n">Ваше имя</label><input id="n" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
+            <div class="field"><label for="p">Телефон</label><input id="p" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__"></div>
+            <div class="err" id="err" role="alert"></div>
+            <button class="btn" type="submit">Отправить заявку</button>
+          </form>
+          <div class="success" id="ok" hidden>
+            <div class="tick"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2a6fd0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Заявка принята (демо)</h3>
+            <p id="sum"></p>
+            <p style="margin-top:10px;font-size:14px">В готовой версии администратор получит её мгновенно и перезвонит.</p>
+            <button class="btn ghost small" type="button" id="again" style="margin-top:16px">Заполнить ещё раз</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal"><h2>Мастерская и работы</h2><p>Здесь будут настоящие фотографии, их лучше сделать вместе с вами.</p></div>
+      <div class="gallery"><div class="ph reveal">Здесь будет фото мастерской</div><div class="ph reveal">Здесь будут фото мастеров</div><div class="ph reveal">Здесь будут фото работ</div></div>
+    </div>
+  </section>
+
+  <section id="kontakty">
+    <div class="wrap">
+      <div class="head reveal"><h2>Как нас найти</h2></div>
+      <div class="contact">
+        <div class="box reveal">
+          <h3>Контакты</h3>
+          <dl>
+            <div><dt>Город</dt><dd>Ваш город</dd></div>
+            <div><dt>Адрес</dt><dd>Ваш адрес</dd></div>
+            <div><dt>Телефон</dt><dd>Ваш телефон</dd></div>
+            <div><dt>Часы работы</dt><dd>Ваши часы работы</dd></div>
+          </dl>
+        </div>
+        <div class="map reveal">Здесь будет карта<br>с отметкой вашего заведения</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Пример подготовил Данила. Если понравится, сделаю такой сайт для вас: название, фото, прайс, домен и приём заявок в Telegram.</div></footer>
+
+<div class="bar"><a class="btn" href="#zapis">Записаться</a><a class="btn ghost" href="#kontakty">Контакты</a></div>
+
+<script>
+(function () {
+  var chips = document.querySelectorAll('#svc .chip'), service = '';
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      c.setAttribute('aria-pressed', 'true'); service = c.textContent;
+    });
+  });
+  var slotsBox = document.getElementById('slots'), time = '';
+  ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'].forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'slot'; b.textContent = t; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () {
+      slotsBox.querySelectorAll('.slot').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true'); time = t;
+    });
+    slotsBox.appendChild(b);
+  });
+  var date = document.getElementById('d'), today = new Date().toISOString().slice(0, 10);
+  date.min = today; date.value = today;
+  var form = document.getElementById('f'), ok = document.getElementById('ok'), err = document.getElementById('err');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('n').value.trim(), phone = document.getElementById('p').value.trim();
+    if (!service) { err.textContent = 'Выберите, что вам нужно.'; return; }
+    if (!time) { err.textContent = 'Выберите время.'; return; }
+    if (name.length < 2) { err.textContent = 'Укажите имя.'; return; }
+    if (phone.replace(/\D/g, '').length < 10) { err.textContent = 'Проверьте телефон.'; return; }
+    err.textContent = '';
+    document.getElementById('sum').textContent = name + ', ' + service.toLowerCase() + ', ' + date.value.split('-').reverse().join('.') + ' в ' + time + '.';
+    form.hidden = true; ok.hidden = false;
+  });
+  document.getElementById('again').addEventListener('click', function () {
+    ok.hidden = true; form.hidden = false; form.reset(); date.value = today; service = ''; time = '';
+    document.querySelectorAll('.chip,.slot').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+  });
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { threshold: .12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else { els.forEach(function (el) { el.classList.add('in'); }); }
+})();
+</script>
+</body>
+</html>
